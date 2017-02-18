@@ -11,7 +11,6 @@ for file_name in os.listdir("./movies_list/"):
         movie_file = open("./movies_list/"+file_name, 'r') 
         # Read file => parse JSON string to dictionary
         json_string = movie_file.read()
-        print(json_string)
         movie_data = json.loads(json_string)
         # Create Movie object 
         movie_object = movie.Movie(movie_data)
