@@ -17,17 +17,17 @@ class Movie() :
                 self.__fallback_definition(["title"])
 
             if "storyline" in args :
-                self.title = args["storyline"]
+                self.storyline = args["storyline"]
             else :
                 self.__fallback_definition(["storyline"])
 
             if "poster_image_url" in args :
-                self.title = args["poster_image_url"]
+                self.poster_image_url = args["poster_image_url"]
             else :
                 self.__fallback_definition(["poster_image_url"])
 
             if "trailer_youtube_url" in args :
-                self.title = args["trailer_youtube_url"]
+                self.trailer_youtube_url = args["trailer_youtube_url"]
             else :
                 self.__fallback_definition(["trailer_youtube_url"])
                 
@@ -35,7 +35,7 @@ class Movie() :
             self.__fallback_definition(["title", "storyline",
                                         "poster_image_url",
                                         "trailer_youtube_url"])
-
+    
     def __fallback_definition(self, variable_names_list) :
         """Assigns default values to main object variables if they don't exist
 
