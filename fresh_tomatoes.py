@@ -172,7 +172,7 @@ movie_tile_content = '''
 
 def create_movie_tiles_content(movies):
     # The HTML content for this section of the page
-    content = '<div class="row movies-row"><div class="col-md-6 movies-group">'
+    content = '<div class="row movies-row"><div class="col-md-6 row movies-group">'
     counter = 0
     for movie in movies:       
 
@@ -181,7 +181,7 @@ def create_movie_tiles_content(movies):
             content += '</div>'
             if  counter % 4 == 0 :
                 content += '</div><div class="row movies-row">'
-            content += '<div class="col-md-6 movies-group">'
+            content += '<div class="col-md-6 row movies-group">'
 
         # Extract the youtube ID from the url
         youtube_id_match = re.search(
