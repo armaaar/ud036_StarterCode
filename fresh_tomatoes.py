@@ -20,6 +20,21 @@ main_page_head = '''
         body {
             padding-top: 80px;
         }
+        .navbar-static-top, .navbar-fixed-top, .navbar-fixed-bottom
+        {
+            height: 65px;
+            border-bottom: 2px #999 solid;
+        }
+        #logo
+        {
+            height : 35px;
+            width : auto;
+            margin-right : 10px;
+        }
+        .navbar-brand span
+        {
+            vertical-align: -webkit-baseline-middle;
+        }
         #trailer .modal-dialog {
             margin-top: 200px;
             width: 640px;
@@ -107,7 +122,10 @@ main_page_content = '''
       <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
           <div class="navbar-header">
-            <a class="navbar-brand" href="#">Fresh Tomatoes Movie Trailers</a>
+            <a class="navbar-brand" href="#">
+                <img src="https://doc-0g-ao-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/vshp4d84aqfmtd2bcgoea3uhts1u459n/1487491200000/12120396911383298722/*/0B7SAFvZCn14BMy14UVpqeEVMUzQ" alt="logo" title="logo" id="logo" />
+                <span>Fresh Tomatoes Movie Trailers</span>
+            </a>
           </div>
         </div>
       </div>
