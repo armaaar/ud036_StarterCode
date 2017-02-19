@@ -10,7 +10,7 @@ main_page_head = '''
 <head>
     <meta charset="utf-8">
     <title>Fresh Tomatoes!</title>
-
+    <link rel="shortcut icon" type="imagex-icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-play-128.png" />
     <!-- Bootstrap 3 -->
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
@@ -50,8 +50,14 @@ main_page_head = '''
             width: 100%;
             height: 100%;
         }
+        .movie-tiles-container
+        {
+        	text-align : center;
+        }
         .movies-group {
             padding: 0;
+            margin-left: 0;
+            margin-right: 0;
         }
         .movie-tile {
             margin-bottom: 20px;
@@ -62,15 +68,36 @@ main_page_head = '''
         .movie-tile:hover {
             background-color: #EEE;
         }
-        .movie-tile .movie-poster:hover {
-            cursor: pointer;
+        .movie-tile .poster-container
+        {
+        	position : relative;
+        	cursor: pointer;
+        	width : 220px;
+        	margin : auto;
         }
+        .movie-tile .poster-container .trailer-icon
+        {
+	position : absolute;
+	top : 0;
+	left : 0;
+	width : 100%;
+	height : 100%;
+	background-color : #000;
+	opacity : 0.5;
+	display : none;
+        }
+        .movie-tile .poster-container .trailer-icon img
+        {
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+        }
+        
          .movie-tile .movie-storyline {
             padding-top: 10px;
             padding-bottom : 10px;
-
            display : none;
-           cursor: default;
         }
         .scale-media {
             padding-bottom: 56.25%;
@@ -94,7 +121,7 @@ main_page_head = '''
             $("#trailer-video-container").empty();
         });
         // Start playing the video whenever the trailer modal is opened
-        $(document).on('click', '.movie-poster', function (event) {
+        $(document).on('click', '.poster-container', function (event) {
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
             var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
@@ -104,18 +131,29 @@ main_page_head = '''
               'frameborder': 0
             }));
         });
-        // Animate in the movies when the page loads
+        // Some Animations
         $(document).ready(function () {
+        // Animate in the movies when the page loads
           $('.row.movies-row .movies-group').each(function(){
                 $(this).find('.movie-tile').hide().first().show("fast", function showNext() {
                 $(this).next("div").show("fast", showNext);
             });
           });
+
+          // Show storylines when tiles are hovered
           $('.movie-tile').hover(function(){
                 $(this).find('.movie-storyline').slideDown();
           });
           $('.movie-tile').mouseleave(function(){
-                $(this).find('.movie-storyline').slideUp();
+                $(this).find('.movie-storyline').slideUp("fast");
+          });
+
+          // Show play icon when posters are hovered
+          $('.poster-container').hover(function(){
+                $(this).find('.trailer-icon').fadeIn("fast");
+          });
+          $('.poster-container').mouseleave(function(){
+                $(this).find('.trailer-icon').fadeOut("fast");
           });
         });
     </script>
@@ -152,7 +190,7 @@ main_page_content = '''
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="container movie-tiles-container">
       {movie_tiles}
     </div>
   </body>
@@ -163,7 +201,10 @@ main_page_content = '''
 # A single movie entry html template
 movie_tile_content = '''
 <div class="col-sm-6 movie-tile text-center">
-    <img class="movie-poster" src="{poster_image_url}" width="220" height="342"  data-trailer-youtube-id="{trailer_youtube_id}"  data-toggle="modal" data-target="#trailer">
+    <div class="poster-container"   data-trailer-youtube-id="{trailer_youtube_id}"  data-toggle="modal" data-target="#trailer">
+    	<img class="movie-poster" src="{poster_image_url}" width="220" height="342">
+	<div class="trailer-icon"><img src="http://www.iconsplace.com/icons/preview/white/play-256.png" alt="Watch Trailer" title="Watch Trailer" width="50" height="50"></div>
+    </div>
     <h2>{movie_title}</h2>
     <p class="movie-storyline">{movie_storyline}</p>
 </div>
