@@ -6,10 +6,11 @@ The only requirement in so have python and a web browser in your machine. python
 
 ## Usage
 1. Add movies' data in .JSON files in JSON format to 'movies_list' directory. More info in "Add new movie" Section.
-2. execute 'movie_trailer_website.py' files. A webpage will be created in the project directory and be opened in you default web browser.
-Simple enough!
+2. execute 'movie_trailer_website.py' files.
 
-## Add new movie
+A webpage will be created in the project directory and be opened in you default web browser. Simple enough!
+
+## Add a new movie
 To add a movie, the following data is required for each movie :
 - Movie Title
 - Movie storyline
