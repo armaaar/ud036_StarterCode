@@ -50,13 +50,27 @@ main_page_head = '''
             width: 100%;
             height: 100%;
         }
+        .movies-group {
+            padding: 0;
+        }
         .movie-tile {
             margin-bottom: 20px;
             padding-top: 20px;
+            -webkit-transition: height 2s; /* Safari */
+            transition: height 2s;
         }
         .movie-tile:hover {
             background-color: #EEE;
+        }
+        .movie-tile .movie-poster:hover {
             cursor: pointer;
+        }
+         .movie-tile .movie-storyline {
+            padding-top: 10px;
+            padding-bottom : 10px;
+
+           display : none;
+           cursor: default;
         }
         .scale-media {
             padding-bottom: 56.25%;
@@ -80,7 +94,7 @@ main_page_head = '''
             $("#trailer-video-container").empty();
         });
         // Start playing the video whenever the trailer modal is opened
-        $(document).on('click', '.movie-tile', function (event) {
+        $(document).on('click', '.movie-poster', function (event) {
             var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
             var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
             $("#trailer-video-container").empty().append($("<iframe></iframe>", {
@@ -92,8 +106,16 @@ main_page_head = '''
         });
         // Animate in the movies when the page loads
         $(document).ready(function () {
-          $('.movie-tile').hide().first().show("fast", function showNext() {
-            $(this).next("div").show("fast", showNext);
+          $('.row.movies-row .movies-group').each(function(){
+                $(this).find('.movie-tile').hide().first().show("fast", function showNext() {
+                $(this).next("div").show("fast", showNext);
+            });
+          });
+          $('.movie-tile').hover(function(){
+                $(this).find('.movie-storyline').slideDown();
+          });
+          $('.movie-tile').mouseleave(function(){
+                $(this).find('.movie-storyline').slideUp();
           });
         });
     </script>
@@ -140,17 +162,27 @@ main_page_content = '''
 
 # A single movie entry html template
 movie_tile_content = '''
-<div class="col-md-6 col-lg-4 movie-tile text-center" data-trailer-youtube-id="{trailer_youtube_id}" data-toggle="modal" data-target="#trailer">
-    <img src="{poster_image_url}" width="220" height="342">
+<div class="col-sm-6 movie-tile text-center">
+    <img class="movie-poster" src="{poster_image_url}" width="220" height="342"  data-trailer-youtube-id="{trailer_youtube_id}"  data-toggle="modal" data-target="#trailer">
     <h2>{movie_title}</h2>
+    <p class="movie-storyline">{movie_storyline}</p>
 </div>
 '''
 
 
 def create_movie_tiles_content(movies):
     # The HTML content for this section of the page
-    content = ''
-    for movie in movies:
+    content = '<div class="row movies-row"><div class="col-md-6 movies-group">'
+    counter = 0
+    for movie in movies:       
+
+        #group each 4 tiles into 1 row and each 2 tiles in the same row together
+        if counter != 0 and counter % 2 == 0 :
+            content += '</div>'
+            if  counter % 4 == 0 :
+                content += '</div><div class="row movies-row">'
+            content += '<div class="col-md-6 movies-group">'
+
         # Extract the youtube ID from the url
         youtube_id_match = re.search(
             r'(?<=v=)[^&#]+', movie.trailer_youtube_url)
@@ -162,9 +194,13 @@ def create_movie_tiles_content(movies):
         # Append the tile for the movie with its content filled in
         content += movie_tile_content.format(
             movie_title=movie.title,
+            movie_storyline=movie.storyline,
             poster_image_url=movie.poster_image_url,
             trailer_youtube_id=trailer_youtube_id
         )
+        counter += 1
+
+    content += '</div>'
     return content
 
 
