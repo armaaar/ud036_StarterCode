@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Fresh Tomatoes!</title>
+    <link rel="shortcut icon" type="imagex-icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-play-128.png" />
+    <!-- Bootstrap 3 -->
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <style type="text/css" media="screen">
+        body {
+            padding-top: 80px;
+        }
+        .navbar-static-top, .navbar-fixed-top, .navbar-fixed-bottom
+        {
+            height: 65px;
+            border-bottom: 2px #999 solid;
+        }
+        #logo
+        {
+            height : 35px;
+            width : auto;
+            margin-right : 10px;
+        }
+        .navbar-brand span
+        {
+            vertical-align: -webkit-baseline-middle;
+        }
+        #trailer .modal-dialog {
+            margin-top: 200px;
+            width: 640px;
+            height: 480px;
+        }
+        .hanging-close {
+            position: absolute;
+            top: -12px;
+            right: -12px;
+            z-index: 9001;
+        }
+        #trailer-video {
+            width: 100%;
+            height: 100%;
+        }
+        .movie-tiles-container
+        {
+        	text-align : center;
+        }
+        .movies-group {
+            padding: 0;
+            margin-left: 0;
+            margin-right: 0;
+        }
+        .movie-tile {
+            margin-bottom: 20px;
+            padding-top: 20px;
+            -webkit-transition: height 2s; /* Safari */
+            transition: height 2s;
+        }
+        .movie-tile:hover {
+            background-color: #EEE;
+        }
+        .movie-tile .poster-container
+        {
+        	position : relative;
+        	cursor: pointer;
+        	width : 220px;
+        	margin : auto;
+        }
+        .movie-tile .poster-container .trailer-icon
+        {
+	position : absolute;
+	top : 0;
+	left : 0;
+	width : 100%;
+	height : 100%;
+	background-color : #000;
+	opacity : 0.5;
+	display : none;
+        }
+        .movie-tile .poster-container .trailer-icon img
+        {
+	  position: absolute;
+	  top: 50%;
+	  left: 50%;
+	  transform: translate(-50%, -50%);
+        }
+        
+         .movie-tile .movie-storyline {
+            padding-top: 10px;
+            padding-bottom : 10px;
+           display : none;
+        }
+        .scale-media {
+            padding-bottom: 56.25%;
+            position: relative;
+        }
+        .scale-media iframe {
+            border: none;
+            height: 100%;
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            background-color: white;
+        }
+    </style>
+    <script type="text/javascript" charset="utf-8">
+        // Pause the video when the modal is closed
+        $(document).on('click', '.hanging-close, .modal-backdrop, .modal', function (event) {
+            // Remove the src so the player itself gets removed, as this is the only
+            // reliable way to ensure the video stops playing in IE
+            $("#trailer-video-container").empty();
+        });
+        // Start playing the video whenever the trailer modal is opened
+        $(document).on('click', '.poster-container', function (event) {
+            var trailerYouTubeId = $(this).attr('data-trailer-youtube-id')
+            var sourceUrl = 'http://www.youtube.com/embed/' + trailerYouTubeId + '?autoplay=1&html5=1';
+            $("#trailer-video-container").empty().append($("<iframe></iframe>", {
+              'id': 'trailer-video',
+              'type': 'text-html',
+              'src': sourceUrl,
+              'frameborder': 0
+            }));
+        });
+        // Some Animations
+        $(document).ready(function () {
+        // Animate in the movies when the page loads
+          $('.row.movies-row .movies-group').each(function(){
+                $(this).find('.movie-tile').hide().first().show("fast", function showNext() {
+                $(this).next("div").show("fast", showNext);
+            });
+          });
+
+          // Show storylines when tiles are hovered
+          $('.movie-tile').hover(function(){
+                $(this).find('.movie-storyline').slideDown();
+          });
+          $('.movie-tile').mouseleave(function(){
+                $(this).find('.movie-storyline').slideUp("fast");
+          });
+
+          // Show play icon when posters are hovered
+          $('.poster-container').hover(function(){
+                $(this).find('.trailer-icon').fadeIn("fast");
+          });
+          $('.poster-container').mouseleave(function(){
+                $(this).find('.trailer-icon').fadeOut("fast");
+          });
+        });
+    </script>
+</head>
+
+  <body>
+    <!-- Trailer Video Modal -->
+    <div class="modal" id="trailer">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <a href="#" class="hanging-close" data-dismiss="modal" aria-hidden="true">
+            <img src="https://lh5.ggpht.com/v4-628SilF0HtHuHdu5EzxD7WRqOrrTIDi_MhEG6_qkNtUK5Wg7KPkofp_VJoF7RS2LhxwEFCO1ICHZlc-o_=s0#w=24&h=24"/>
+          </a>
+          <div class="scale-media" id="trailer-video-container">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Page Content -->
+    <div class="container">
+      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img src="https://doc-0g-ao-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/vshp4d84aqfmtd2bcgoea3uhts1u459n/1487491200000/12120396911383298722/*/0B7SAFvZCn14BMy14UVpqeEVMUzQ" alt="logo" title="logo" id="logo" />
+                <span>Fresh Tomatoes Movie Trailers</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container movie-tiles-container">
+      <div class="row movies-row"><div class="col-md-6 row movies-group">
+<div class="col-sm-6 movie-tile text-center">
+    <div class="poster-container"   data-trailer-youtube-id="dzwErbjE0eI"  data-toggle="modal" data-target="#trailer">
+    	<img class="movie-poster" src="https://images-na.ssl-images-amazon.com/images/M/MV5BZWRlNDdkNzItMzhlZC00YTdmLWIwNjktYjY5NjQ1ZmQ3N2FkXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,747,1000_AL_.jpg" width="220" height="342">
+	<div class="trailer-icon"><img src="http://www.iconsplace.com/icons/preview/white/play-256.png" alt="Watch Trailer" title="Watch Trailer" width="50" height="50"></div>
+    </div>
+    <h2>3 Idiots</h2>
+    <p class="movie-storyline">Two friends are searching for their long lost companion. They revisit their college days and recall the memories of their friend who inspired them to think differently, even as the rest of the world called them 'idiots'.</p>
+</div>
+
+<div class="col-sm-6 movie-tile text-center">
+    <div class="poster-container"   data-trailer-youtube-id="OvW_L8sTu5E"  data-toggle="modal" data-target="#trailer">
+    	<img class="movie-poster" src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTUwNjUxMTM4NV5BMl5BanBnXkFtZTgwODExMDQzMTI@._V1_SY1000_CR0,0,674,1000_AL_.jpg" width="220" height="342">
+	<div class="trailer-icon"><img src="http://www.iconsplace.com/icons/preview/white/play-256.png" alt="Watch Trailer" title="Watch Trailer" width="50" height="50"></div>
+    </div>
+    <h2>Beauty and the Beast</h2>
+    <p class="movie-storyline">An adaptation of the Disney fairy tale about a monstrous-looking prince and a young woman who fall in love.</p>
+</div>
+</div><div class="col-md-6 row movies-group">
+<div class="col-sm-6 movie-tile text-center">
+    <div class="poster-container"   data-trailer-youtube-id="SUXWAEX2jlg"  data-toggle="modal" data-target="#trailer">
+    	<img class="movie-poster" src="https://images-na.ssl-images-amazon.com/images/M/MV5BMzc1YmU2ZjEtYWIwMC00ZjM3LWI0NTctMDVlNGQ3YmYwMzE5XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SY999_CR0,0,704,999_AL_.jpg" width="220" height="342">
+	<div class="trailer-icon"><img src="http://www.iconsplace.com/icons/preview/white/play-256.png" alt="Watch Trailer" title="Watch Trailer" width="50" height="50"></div>
+    </div>
+    <h2>Fight Club</h2>
+    <p class="movie-storyline">An insomniac office worker, looking for a way to change his life, crosses paths with a devil-may-care soap maker, forming an underground fight club that evolves into something much, much more.</p>
+</div>
+
+<div class="col-sm-6 movie-tile text-center">
+    <div class="poster-container"   data-trailer-youtube-id="IvTT29cavKo"  data-toggle="modal" data-target="#trailer">
+    	<img class="movie-poster" src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTgwMzQzNTQ1Ml5BMl5BanBnXkFtZTgwMDY2NTYxMTE@._V1_SY1000_CR0,0,675,1000_AL_.jpg" width="220" height="342">
+	<div class="trailer-icon"><img src="http://www.iconsplace.com/icons/preview/white/play-256.png" alt="Watch Trailer" title="Watch Trailer" width="50" height="50"></div>
+    </div>
+    <h2>Gladiator</h2>
+    <p class="movie-storyline">When a Roman general is betrayed and his family murdered by an emperor's corrupt son, he comes to Rome as a gladiator to seek revenge.</p>
+</div>
+</div></div><div class="row movies-row"><div class="col-md-6 row movies-group">
+<div class="col-sm-6 movie-tile text-center">
+    <div class="poster-container"   data-trailer-youtube-id="zSWdZVtXT7E"  data-toggle="modal" data-target="#trailer">
+    	<img class="movie-poster" src="https://images-na.ssl-images-amazon.com/images/M/MV5BMjIxNTU4MzY4MF5BMl5BanBnXkFtZTgwMzM4ODI3MjE@._V1_SY1000_CR0,0,640,1000_AL_.jpg" width="220" height="342">
+	<div class="trailer-icon"><img src="http://www.iconsplace.com/icons/preview/white/play-256.png" alt="Watch Trailer" title="Watch Trailer" width="50" height="50"></div>
+    </div>
+    <h2>Interstellar</h2>
+    <p class="movie-storyline">A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.</p>
+</div>
+
+<div class="col-sm-6 movie-tile text-center">
+    <div class="poster-container"   data-trailer-youtube-id="0pdqf4P9MB8"  data-toggle="modal" data-target="#trailer">
+    	<img class="movie-poster" src="https://images-na.ssl-images-amazon.com/images/M/MV5BMzUzNDM2NzM2MV5BMl5BanBnXkFtZTgwNTM3NTg4OTE@._V1_SY1000_SX675_AL_.jpg" width="220" height="342">
+	<div class="trailer-icon"><img src="http://www.iconsplace.com/icons/preview/white/play-256.png" alt="Watch Trailer" title="Watch Trailer" width="50" height="50"></div>
+    </div>
+    <h2>La La Land</h2>
+    <p class="movie-storyline">A jazz pianist falls for an aspiring actress in Los Angeles.</p>
+</div>
+</div><div class="col-md-6 row movies-group">
+<div class="col-sm-6 movie-tile text-center">
+    <div class="poster-container"   data-trailer-youtube-id="kmJLuwP3MbY"  data-toggle="modal" data-target="#trailer">
+    	<img class="movie-poster" src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SY1000_CR0,0,675,1000_AL_.jpg" width="220" height="342">
+	<div class="trailer-icon"><img src="http://www.iconsplace.com/icons/preview/white/play-256.png" alt="Watch Trailer" title="Watch Trailer" width="50" height="50"></div>
+    </div>
+    <h2>The Dark Knight</h2>
+    <p class="movie-storyline">When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, the caped crusader must come to terms with one of the greatest psychological tests of his ability to fight injustice.</p>
+</div>
+
+<div class="col-sm-6 movie-tile text-center">
+    <div class="poster-container"   data-trailer-youtube-id="iMdQXYQ_MD8"  data-toggle="modal" data-target="#trailer">
+    	<img class="movie-poster" src="https://images-na.ssl-images-amazon.com/images/M/MV5BMTcyNTEyOTY0M15BMl5BanBnXkFtZTgwOTAyNzU3MDI@._V1_SY1000_CR0,0,674,1000_AL_.jpg" width="220" height="342">
+	<div class="trailer-icon"><img src="http://www.iconsplace.com/icons/preview/white/play-256.png" alt="Watch Trailer" title="Watch Trailer" width="50" height="50"></div>
+    </div>
+    <h2>The LEGO Batman Movie</h2>
+    <p class="movie-storyline">Bruce Wayne must not only deal with the criminals of Gotham City, but also the responsibility of raising a boy he adopted.</p>
+</div>
+</div></div><div class="row movies-row"><div class="col-md-6 row movies-group">
+<div class="col-sm-6 movie-tile text-center">
+    <div class="poster-container"   data-trailer-youtube-id="m8e-FF8MsqU"  data-toggle="modal" data-target="#trailer">
+    	<img class="movie-poster" src="https://images-na.ssl-images-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SY1000_CR0,0,665,1000_AL_.jpg" width="220" height="342">
+	<div class="trailer-icon"><img src="http://www.iconsplace.com/icons/preview/white/play-256.png" alt="Watch Trailer" title="Watch Trailer" width="50" height="50"></div>
+    </div>
+    <h2>The Matrix</h2>
+    <p class="movie-storyline">A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers.</p>
+</div>
+
+<div class="col-sm-6 movie-tile text-center">
+    <div class="poster-container"   data-trailer-youtube-id="6hB3S9bIaco"  data-toggle="modal" data-target="#trailer">
+    	<img class="movie-poster" src="https://images-na.ssl-images-amazon.com/images/M/MV5BODU4MjU4NjIwNl5BMl5BanBnXkFtZTgwMDU2MjEyMDE@._V1_SY1000_CR0,0,672,1000_AL_.jpg" width="220" height="342">
+	<div class="trailer-icon"><img src="http://www.iconsplace.com/icons/preview/white/play-256.png" alt="Watch Trailer" title="Watch Trailer" width="50" height="50"></div>
+    </div>
+    <h2>The Shawshank Redemption</h2>
+    <p class="movie-storyline">Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.</p>
+</div>
+</div>
+    </div>
+  </body>
+</html>

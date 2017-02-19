@@ -57,11 +57,11 @@ class Movie() :
         
         for name in variable_names_list :
             if name == "title" :
-                self.title = None
+                self.title = "No title"
             elif name == "storyline" :
                 self.storyline = None
             elif name == "poster_image_url" :
-                self.poster_image_url = None
+                self.poster_image_url = "http://sd.keepcalm-o-matic.co.uk/i/keep-calm-poster-not-found.png"
             elif name == "trailer_youtube_url" :
                 self.trailer_youtube_url = None
         return True
